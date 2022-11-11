@@ -13,7 +13,9 @@ const db = knex({
     client: 'pg',
     connection: {
         connectionString: process.env.DATABASE_URL,
-        ssl: true,
+        ssl: {
+            rejectUnauthorized: false
+        }
     }
 });
 
@@ -28,19 +30,19 @@ app.get("/", (req, res) => {
     res.send('alright')
 })
 
-app.post("/signin", (req,res) =>{signin.handleSignin(req,res,db,bcrypt)})
+app.post("/signin", (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
 
-app.post('/register', (req,res) => {register.handleRegister(req,res,db,bcrypt)})
+app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 
-app.get("/profile/:id", (req,res) => {profile.handleProfileGet(req,res,db)})
+app.get("/profile/:id", (req, res) => { profile.handleProfileGet(req, res, db) })
 
-app.put("/image", (req,res) => {image.handleImage(req,res,db)})
-
-
+app.put("/image", (req, res) => { image.handleImage(req, res, db) })
 
 
 
 
-app.listen( process.env.PORT || 3000, () => {
+
+
+app.listen(process.env.PORT || 3000, () => {
     console.log(`This server is running on port ${process.env.PORT}`);
 })
